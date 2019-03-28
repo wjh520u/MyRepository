@@ -41,6 +41,6 @@ mybatis:
 #  type-aliases-package: com.linux.huhx.learn.mybatis.bean
 
 #日志的方式打印sql
- logging: 
+logging: 
   level:
     com.wjh.mysql.mybatis_annotation.demo.mapper: DEBUG
