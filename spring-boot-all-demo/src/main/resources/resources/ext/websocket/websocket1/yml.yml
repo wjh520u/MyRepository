@@ -1,0 +1,10 @@
+server:
+  port: 8085
+  
+spring: 
+  resources: 
+    static-locations: classpath:/resources/ext/websocket/websocket1/templates/
+    cache:
+      period: 6000
+    chain:
+      cache: false

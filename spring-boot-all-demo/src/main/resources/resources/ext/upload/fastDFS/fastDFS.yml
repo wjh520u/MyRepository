@@ -1,0 +1,13 @@
+server:
+  port: 8085
+  tomcat:
+    # 设定URI的解码字符集.
+    uri-encoding: UTF-8
+    # 设定tomcat的最大工作线程数，默认为: 0
+    max-threads: 1000
+    max-http-header-size: 8192
+    min-spare-threads: 30
+spring:
+  thymeleaf:
+      prefix: classpath:/resources/ext/upload/fastDFS/templates/
+      suffix: .html

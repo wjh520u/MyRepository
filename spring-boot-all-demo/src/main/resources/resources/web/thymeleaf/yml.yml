@@ -1,0 +1,11 @@
+server:
+  port: 8085
+  
+spring:
+  mvc:
+    static-path-pattern: /** 
+  resources:
+    static-locations: classpath:/resources/web/thymeleaf/static/
+  thymeleaf:
+      prefix: classpath:/resources/web/thymeleaf/templates/
+      suffix: .html

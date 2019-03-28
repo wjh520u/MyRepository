@@ -1,0 +1,135 @@
+server:
+  port: 8085
+  tomcat:
+    # 设定URI的解码字符集.
+    uri-encoding: UTF-8
+    # 设定tomcat的最大工作线程数，默认为: 0
+    max-threads: 1000
+    min-spare-threads: 30
+    #accesslog:
+      # 设定log的目录，默认: logs
+      #directory: 
+      # 是否开启access log，默认: false
+      #enabled: 
+      # 设定access logs的格式，默认: common
+      #pattern: 
+      # 设定Log 文件的前缀，默认: access_log
+      #prefix: 
+      # 设定Log 文件的后缀，默认: .log
+      #suffix: 
+    # 后台线程方法的Delay大小: 30
+    #background-processor-delay:
+    # 设定Tomcat的base 目录，如果没有指定则使用临时目录.
+    #basedir:
+    # 设定信任的正则表达式，默认:“10\.\d{1,3}\.\d{1,3}\.\d{1,3}| 192\.168\.\d{1,3}\.\d{1,3}| 169\.254\.\d{1,3}\.\d{1,3}| 127\.\d{1,3}\.\d{1,3}\.\d{1,3}| 172\.1[6-9]{1}\.\d{1,3}\.\d{1,3}| 172\.2[0-9]{1}\.\d{1,3}\.\d{1,3}|172\.3[0-1]{1}\.\d{1,3}\.\d{1,3}”
+    #internal-proxies: 
+    # 设定http header的最小值，默认: 0
+    #max-http-header-size: 
+    # 设定http header使用的，用来覆盖原来port的value.
+    #port-header: 
+    # 设定Header包含的协议，通常是 X-Forwarded-Proto，如果remoteIpHeader有值，则将设置为RemoteIpValve.
+    #protocol-header: 
+    # 设定使用SSL的header的值，默认https.
+    #protocol-header-https-value: 
+    # 设定remote IP的header，如果remoteIpHeader有值，则设置为RemoteIpValve
+    #remote-ip-header: 
+  #address: 指定server绑定的地址
+
+  #compression: 
+    # 是否开启压缩，默认为false.
+    #enabled: 
+    # 指定不压缩的user-agent，多个以逗号分隔，默认值为:text/html,text/xml,text/plain,text/css
+    #excluded-user-agents: 
+    # 指定要压缩的MIME type，多个以逗号分隔.
+    #mime-types: 
+    # 执行压缩的阈值，默认为2048
+    #min-response-size: 
+
+  #servlet: 
+    # 设置servlet context 参数
+    #context-parameters:
+    # 设定应用的context-path
+    #context-path: /
+    # 设定应用的展示名称，默认: application
+    #application-display-name: 
+#cookie、session配置
+    #session:
+      # 重启时是否持久化session，默认false
+      #persistent: 
+      # session的超时时间
+      #timeout:
+      # 设定Session的追踪模式(cookie, url, ssl).
+      #tracking-modes: 
+      #cookie: 
+        # 设定session cookie的“Secure” flag.
+        #secure: 
+        # 设定session cookie的路径.
+        #path: 
+        # 设定Session cookie 的名称.
+        #name: 
+        # 设定session cookie的最大age.
+        #max-age:
+        # 是否开启HttpOnly.
+        #http-only: 
+        # 指定session cookie的comment
+        #comment:
+        # 指定session cookie的domain
+        #domain: 
+#ssl配置
+  #ssl:
+    # 是否支持SSL ciphers.
+    #ciphers: 
+    # 设定client authentication是wanted 还是 needed.
+    #client-auth: 
+    # 是否开启ssl，默认: true
+    #enabled: 
+    # 设定key store中key的别名.
+    #key-alias: 
+    # 访问key store中key的密码.
+    #key-password: 
+    # 设定持有SSL certificate的key store的路径，通常是一个.jks文件.
+    #key-store: 
+    # 设定访问key store的密码.
+    #key-store-password: 
+    # 设定key store的提供者.
+    #key-store-provider: 
+    # 设定key store的类型.
+    #key-store-type: 
+    # 使用的SSL协议，默认: TLS
+    #protocol: 
+    # 持有SSL certificates的Trust store.
+    #trust-store: 
+    # 访问trust store的密码.
+    #trust-store-password: 
+    # 设定trust store的提供者.
+    #trust-store-provider: 
+    # 指定trust store的类型.
+    #trust-store-type: 
+#undertow 
+  #undertow:
+    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+    # 不要设置过大，如果过大，启动项目会报错：打开文件数过多
+    #io-threads: 16 
+    # 阻塞任务线程池, 当执行类似servlet请求阻塞IO操作, undertow会从这个线程池中取得线程
+    # 它的值设置取决于系统线程执行任务的阻塞系数，默认值是IO线程数*8
+    #worker-threads: 256
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分，不要设置太大，以免影响其他应用，合适即可
+    #buffer-size: 1024
+    # 每个区分配的buffer数量 , 所以pool的大小是buffer-size * buffers-per-region
+    #buffers-per-region: 1024
+    # 是否分配的直接内存(NIO直接分配的堆外内存)
+    #direct-buffers: true
+    #accesslog:
+      # 日志文件前缀
+      #prefix: 
+      # 日志文件名后缀。
+      #suffix: 
+      # 设定access log 的目录.
+      #dir: 
+      # 是否开启access log，默认: false
+      #enabled:  
+      # 设定access logs的格式，默认: common
+      #pattern: 
+      # 是否启用访问日志旋转。
+      #rotate: 

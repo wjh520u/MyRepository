@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!--该路径是拦截器文件的路径 dao.Interceptor是拦截器文件的包名称 -->
+	<plugins>
+        <plugin interceptor="com.wjh.mysql.mybatis_annotation.config.MybatisInterceptor">
+        </plugin>
+    </plugins>
+</configuration>

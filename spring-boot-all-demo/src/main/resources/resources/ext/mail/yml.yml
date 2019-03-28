@@ -1,0 +1,18 @@
+server:
+  port: 8085
+spring: 
+  mail:
+    # JavaMailSender 邮件发送的配置,smtp.163.com
+    host: smtp.qq.com
+    #: 用户qq邮箱
+    username: 503950670@qq.com
+    #QQ邮箱的授权码: 授权码
+    password: yiyrehflborjbhie
+    default-encoding: UTF-8
+    # SMTP服务器使用的协议。
+    #protocol: 
+    # 端口
+    #port: 
+mail: 
+  fromMail: 
+    addr: 503950670@qq.com
