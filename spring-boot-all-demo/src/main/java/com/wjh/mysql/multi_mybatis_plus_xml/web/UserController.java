@@ -1,4 +1,4 @@
-package com.wjh.mysql.multi_mybatis_xml.web;
+package com.wjh.mysql.multi_mybatis_plus_xml.web;
 
 import java.util.List;
 
@@ -7,15 +7,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wjh.mysql.multi_mybatis_xml.mapper.one.User1Mapper;
-import com.wjh.mysql.multi_mybatis_xml.mapper.two.User2Mapper;
-import com.wjh.mysql.multi_mybatis_xml.model.User;
+import com.wjh.mysql.multi_mybatis_plus_xml.dao.UsersDao;
+import com.wjh.mysql.multi_mybatis_plus_xml.mapper.one.User1Mapper;
+import com.wjh.mysql.multi_mybatis_plus_xml.mapper.two.User2Mapper;
+import com.wjh.mysql.multi_mybatis_plus_xml.model.User;
 
 @RestController
 public class UserController {
 
     @Autowired
     private User1Mapper user1Mapper;
+    
+    @Autowired
+    UsersDao usersDao;
 
 	@Autowired
 	private User2Mapper user2Mapper;
@@ -34,7 +38,7 @@ public class UserController {
     
     @RequestMapping("/add")
     public User save(User user) {
-        user2Mapper.insert(user);
+        usersDao.insert(user);
         return user;
     }
     

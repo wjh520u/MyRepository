@@ -53,14 +53,14 @@ spring:
 
 mybatis:
 #  mapper-locations: classpath:config/mweb/sql_*.xml
-  config-location: classpath:/resources/mysql/multi_mybatis_xml/mybatis/mybatis_config.xml
+  config-location: classpath:/resources/mysql/multi_mybatis_plus_xml/mybatis/mybatis_config.xml
 #  type-aliases-package: com.linux.huhx.learn.mybatis.bean
 
 #MyBatis
 mybatis-plus:
   mapper-locations: classpath:/resources/mysql/multi_mybatis_plus_xml/mybatis/mapper/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.jinhuatuo.edu.sys.entity
+  #typeAliasesPackage: com.jinhuatuo.edu.sys.entity
   global-config:
     #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
     id-type: 0
@@ -78,7 +78,7 @@ mybatis-plus:
     #logic-delete-value: 0
     #logic-not-delete-value: 1
     #自定义填充策略接口实现
-    meta-object-handler: com.jinhuatuo.edu.config.mybatis.MyMetaObjectHandler
+    #meta-object-handler: com.jinhuatuo.edu.config.mybatis.MyMetaObjectHandler
     #自定义SQL注入器
     #sql-injector: com.baomidou.springboot.xxx
   configuration:

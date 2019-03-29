@@ -1,13 +1,13 @@
-package com.wjh.mysql.multi_mybatis_xml;
+package com.wjh.mysql.multi_mybatis_plus_xml;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
-@SpringBootApplication(scanBasePackages = {"com.wjh.mysql.multi_mybatis_xml"})
+@SpringBootApplication(scanBasePackages = {"com.wjh.mysql.multi_mybatis_plus_xml"})
 public class MMXApplication {
 
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(MMXApplication.class)
-		.properties("spring.config.location=classpath:/resources/mysql/multi_mybatis_xml/yml.yml").run(args);
+		.properties("spring.config.location=classpath:/resources/mysql/multi_mybatis_plus_xml/yml.yml").run(args);
 	}
 }

@@ -1,12 +1,16 @@
-package com.wjh.mysql.multi_mybatis_xml.model;
+package com.wjh.mysql.multi_mybatis_plus_xml.model;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.wjh.mysql.multi_mybatis_xml.enums.UserSexEnum;
 
+@TableName("users")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	@TableId
 	private Long id;
 	private String userName;
 	private String passWord;

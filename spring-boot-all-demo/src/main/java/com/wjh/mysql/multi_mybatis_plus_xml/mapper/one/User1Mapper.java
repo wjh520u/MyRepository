@@ -1,8 +1,8 @@
-package com.wjh.mysql.multi_mybatis_xml.mapper.one;
+package com.wjh.mysql.multi_mybatis_plus_xml.mapper.one;
 
 import java.util.List;
 
-import com.wjh.mysql.multi_mybatis_xml.model.User;
+import com.wjh.mysql.multi_mybatis_plus_xml.model.User;
 
 public interface User1Mapper {
 	

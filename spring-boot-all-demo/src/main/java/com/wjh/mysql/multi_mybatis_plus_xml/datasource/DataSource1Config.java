@@ -1,4 +1,4 @@
-package com.wjh.mysql.multi_mybatis_xml.datasource;
+package com.wjh.mysql.multi_mybatis_plus_xml.datasource;
 
 import javax.sql.DataSource;
 
@@ -18,7 +18,7 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 
 
 @Configuration
-@MapperScan(basePackages = "com.wjh.mysql.multi_mybatis_xml.mapper.one", sqlSessionTemplateRef  = "oneSqlSessionTemplate")
+@MapperScan(basePackages = {"com.wjh.mysql.multi_mybatis_plus_xml.mapper.one","com.wjh.mysql.multi_mybatis_plus_xml.dao"}, sqlSessionTemplateRef  = "oneSqlSessionTemplate")
 public class DataSource1Config {
 
     @Bean(name = "oneDataSource")
@@ -33,8 +33,8 @@ public class DataSource1Config {
     public SqlSessionFactory testSqlSessionFactory(@Qualifier("oneDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:resources/mysql/multi_mybatis_xml/mybatis/mybatis_config.xml"));
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:resources/mysql/multi_mybatis_xml/mybatis/mapper/one/*.xml"));
+        bean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:resources/mysql/multi_mybatis_plus_xml/mybatis/mybatis_config.xml"));
+        //bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:resources/mysql/multi_mybatis_plus_xml/mybatis/mapper/one/*.xml"));
         return bean.getObject();
     }
 
