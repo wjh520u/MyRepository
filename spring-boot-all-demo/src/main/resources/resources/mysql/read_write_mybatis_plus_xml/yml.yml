@@ -2,13 +2,16 @@ server:
   port: 8085
 spring:
   datasource: 
+    readSize: 1  #读库个数
+    type: com.alibaba.druid.pool.DruidDataSource
+    mapperLocations: classpath*:resources/mysql/read_write_mybatis_plus_xml/mybatis/mapper/*.xml
     one: 
       url: jdbc:mysql://127.0.0.1:3306/test?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
       username: root
       password: 123456
       #监控统计拦截的filters
       filters: stat
-      driverClassName: com.mysql.jdbc.Driver
+      driverClassName: com.mysql.cj.jdbc.Driver
       #配置初始化大小/最小/最大
       initialSize: 1
       minIdle: 1
@@ -32,7 +35,7 @@ spring:
       password: 123456
       #监控统计拦截的filters
       filters: stat
-      driverClassName: com.mysql.jdbc.Driver
+      driverClassName: com.mysql.cj.jdbc.Driver
       #配置初始化大小/最小/最大
       initialSize: 1
       minIdle: 1

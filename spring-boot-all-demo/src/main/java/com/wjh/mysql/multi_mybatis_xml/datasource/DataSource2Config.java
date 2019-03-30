@@ -22,7 +22,7 @@ public class DataSource2Config {
 
     @Bean(name = "twoDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.two")
-    public DataSource testDataSource() {
+    public DataSource testDataSource( ) {
         return DruidDataSourceBuilder.create().build();
     }
 

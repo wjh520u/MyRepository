@@ -1,4 +1,4 @@
-package com.wjh.mysql.multi_mybatis_plus_xml.datasource;
+package com.wjh.mysql.multi_mybatis_plus_xml.config.datasource;
 import java.sql.Connection;
 import java.text.DateFormat;
 import java.util.Date;

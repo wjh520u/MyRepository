@@ -24,7 +24,7 @@ public class DataSource1Config {
     @Bean(name = "oneDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.one")
     @Primary
-    public DataSource testDataSource() {
+    public DataSource testDataSource( ) {
         return DruidDataSourceBuilder.create().build();
     }
 
