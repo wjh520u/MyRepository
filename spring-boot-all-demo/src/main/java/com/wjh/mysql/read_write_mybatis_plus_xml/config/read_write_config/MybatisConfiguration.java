@@ -24,9 +24,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.baomidou.mybatisplus.entity.GlobalConfiguration;
-import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
-import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.wjh.mysql.multi_mybatis_plus_xml.config.datasource.DataSource1Config;
 import com.wjh.mysql.multi_mybatis_plus_xml.config.datasource.DataSource2Config;
 import com.wjh.mysql.read_write_mybatis_plus_xml.config.interceptor.SqlPrintInterceptor;
@@ -64,12 +63,12 @@ public class MybatisConfiguration {
 
     @Bean("GlobalConfiguration1")
     @ConfigurationProperties(prefix = "mybatis-plus.global-config")
-    public GlobalConfiguration globalConfiguration( ) {
-        return new GlobalConfiguration(new LogicSqlInjector());
+    public GlobalConfig globalConfiguration( ) {
+        return new GlobalConfig();
     }
 	
     @Bean(name="sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactorys(@Qualifier("GlobalConfiguration1")GlobalConfiguration configuration
+    public SqlSessionFactory sqlSessionFactorys(@Qualifier("GlobalConfiguration1")GlobalConfig configuration
     		,@Qualifier("roundRobinDataSouceProxy")AbstractRoutingDataSource dataSource) throws Exception  {
         log.info("--------------------  sqlSessionFactory init ---------------------");
             MybatisSqlSessionFactoryBean sessionFactoryBean = new MybatisSqlSessionFactoryBean();
@@ -125,9 +124,6 @@ public class MybatisConfiguration {
                         return DataSourceType.write.getType();
                     }
 				}
-        		
-                
-                	
                 //读库， 简单负载均衡
                 
                 return DataSourceType.read.getType()+1;

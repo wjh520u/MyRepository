@@ -1,0 +1,8 @@
+31-03-2019 23:38:26.126 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter.afterSingletonsInstantiated - Registering beans for JMX exposure on startup
+31-03-2019 23:38:26.158 [main] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-8080"]
+31-03-2019 23:38:26.171 [main] INFO  o.a.tomcat.util.net.NioSelectorPool.log - Using a shared selector for servlet write/read
+31-03-2019 23:38:26.211 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path ''
+31-03-2019 23:38:26.222 [main] INFO  com.wjh.ext.logback.Application.logStarted - Started Application in 4.805 seconds (JVM running for 7.243)
+31-03-2019 23:38:26.229 [main] INFO  c.w.e.logback.service.MyServiceImpl.doStuff - doStuff took input - value
+31-03-2019 23:38:26.230 [main] WARN  c.w.e.logback.service.MyServiceImpl.doStuff - doStuff needed to warn - value
+31-03-2019 23:38:26.231 [main] ERROR c.w.e.logback.service.MyServiceImpl.doStuff - doStuff encountered an error with value - value

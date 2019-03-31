@@ -20,7 +20,7 @@ import com.wjh.mysql.read_write_mybatis_plus_xml.config.read_write_config.Mybati
 @Configuration
 @AutoConfigureAfter({MybatisConfiguration.class})
 public class TransactionAdviceConfig {
-     private static final String AOP_POINTCUT_EXPRESSION = "execution (* com.wjh.mysql.read_write_mybatis_plus_xml.service.dao.**.*(..))";
+     private static final String AOP_POINTCUT_EXPRESSION = "execution (* com.wjh.mysql.read_write_mybatis_plus_xml.service.**.*(..))";
  
         @Autowired
         private PlatformTransactionManager transactionManager;
@@ -42,7 +42,9 @@ public class TransactionAdviceConfig {
             source.addTransactionalMethod("update*", txAttr_REQUIRED);
             source.addTransactionalMethod("exec*", txAttr_REQUIRED);
             source.addTransactionalMethod("set*", txAttr_REQUIRED);
+            source.addTransactionalMethod("insert*", txAttr_REQUIRED);
             source.addTransactionalMethod("get*", txAttr_REQUIRED_READONLY);
+            source.addTransactionalMethod("select*", txAttr_REQUIRED_READONLY);
             source.addTransactionalMethod("query*", txAttr_REQUIRED_READONLY);
             source.addTransactionalMethod("find*", txAttr_REQUIRED_READONLY);
             source.addTransactionalMethod("list*", txAttr_REQUIRED_READONLY);

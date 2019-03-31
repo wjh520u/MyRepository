@@ -2,8 +2,8 @@ package com.wjh.mysql.read_write_mybatis_plus_xml.model;
 
 import java.io.Serializable;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.wjh.mysql.multi_mybatis_xml.enums.UserSexEnum;
 
 @TableName("users")

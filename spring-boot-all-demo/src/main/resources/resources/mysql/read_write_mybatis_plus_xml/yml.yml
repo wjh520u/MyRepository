@@ -61,32 +61,36 @@ spring:
 
 #MyBatis
 mybatis-plus:
-  mapper-locations: classpath*:resources/mysql/multi_mybatis_plus_xml/mybatis/mapper/*.xml
+  mapper-locations: classpath*:resources/mysql/read_write_mybatis_plus_xml/mybatis/mapper/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.wjh.mysql.multi_mybatis_plus_xml.model
-  global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    idType: 0
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    fieldStrategy: 1
-    #驼峰下划线转换
-    dbColumnUnderline: true
+  typeAliasesPackage: com.wjh.mysql.read_write_mybatis_plus_xml.model
+  #配置文件
+  #config-location: classpath:/resources/mysql/mybatis_plus_xml/mybatis/mybatis_config.xml
+  global-config: 
+    #是否缓存 Sql 解析，默认不缓存。
+    sql-parser-cache: true
     #刷新mapper 调试神器
-    refreshMapper: true
-    #数据库大写下划线转换
-    #capital-mode: true
-    #序列接口实现类配置
-    #key-generator: com.baomidou.springboot.xxx
-    #逻辑删除配置
-    logicDeleteValue: -1
-    logicNotDeleteValue: 0
+    refresh: true
     #自定义填充策略接口实现
     #meta-object-handler: com.baomidou.springboot.xxx
     #自定义SQL注入器
-    #sqlInjector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    #sqlInjector: com.baomidou.mybatisplus.extension.injector.LogicSqlInjector.class
+    db-config:
+      db-type: mysql
+      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      id-type: 0
+      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: NOT_NULL
+      # 逻辑已删除值(默认为 1)
+      #logic-delete-value: 1
+      #逻辑未删除值(默认为 0)
+      #logic-not-delete-value: 0
   configuration:
+    #是否开启自动驼峰命名规则（camel case）映射
     map-underscore-to-camel-case: true
+    #全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存，默认为 true。
     cache-enabled: false
+    #指定当结果集中值为 null 的时候是否调用映射对象的 Setter（Map 对象时为 put）方法
     call-setters-on-nulls: true
 #日志的方式打印sql
 logging: 

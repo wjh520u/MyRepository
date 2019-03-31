@@ -13,15 +13,14 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
-import com.baomidou.mybatisplus.entity.GlobalConfiguration;
-import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
-import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 
 
 @Configuration
 @MapperScan(basePackages = {"com.wjh.mysql.multi_mybatis_plus_xml.dao.test2dao"}, sqlSessionTemplateRef  = "twoSqlSessionTemplate")
 public class DataSource2Config {
-
+	
     @Bean(name = "twoDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.two")
     public DataSource testDataSource( ) {
@@ -30,7 +29,7 @@ public class DataSource2Config {
 
     @Bean(name = "twoSqlSessionFactory")
     public SqlSessionFactory testSqlSessionFactory(@Qualifier("twoDataSource") DataSource dataSource
-    		,@Qualifier("GlobalConfiguration1")GlobalConfiguration configuration) throws Exception {
+    		,@Qualifier("GlobalConfiguration1")GlobalConfig configuration) throws Exception {
     	MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setGlobalConfig(configuration);
@@ -51,8 +50,8 @@ public class DataSource2Config {
     
     @Bean
     @ConfigurationProperties(prefix = "mybatis-plus.mybatis-plus.global-config")
-    public GlobalConfiguration globalConfiguration() {
-        return new GlobalConfiguration(new LogicSqlInjector());
+    public GlobalConfig globalConfiguration() {
+        return new GlobalConfig();
     }
 
 }

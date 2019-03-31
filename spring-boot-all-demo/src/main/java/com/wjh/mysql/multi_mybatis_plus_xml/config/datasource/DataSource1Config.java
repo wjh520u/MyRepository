@@ -15,9 +15,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
-import com.baomidou.mybatisplus.entity.GlobalConfiguration;
-import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
-import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 
 
 @Configuration
@@ -28,13 +27,14 @@ public class DataSource1Config {
     @ConfigurationProperties(prefix = "spring.datasource.one")
     @Primary
     public DataSource testDataSource( ) {
-       DruidDataSource build = DruidDataSourceBuilder.create().build();
+    	DruidDataSource druidDataSource = new DruidDataSource();
+       return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(name = "oneSqlSessionFactory")
     @Primary
     public SqlSessionFactory testSqlSessionFactory(@Qualifier("oneDataSource") DataSource dataSource
-    		,@Qualifier("GlobalConfiguration1")GlobalConfiguration configuration) throws Exception {
+    		,@Qualifier("GlobalConfiguration1")GlobalConfig configuration) throws Exception {
         MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setGlobalConfig(configuration);
@@ -57,7 +57,7 @@ public class DataSource1Config {
 
     @Bean("GlobalConfiguration1")
     @ConfigurationProperties(prefix = "mybatis-plus.global-config")
-    public GlobalConfiguration globalConfiguration() {
-        return new GlobalConfiguration(new LogicSqlInjector());
+    public GlobalConfig globalConfiguration() {
+        return new GlobalConfig();
     }
 }

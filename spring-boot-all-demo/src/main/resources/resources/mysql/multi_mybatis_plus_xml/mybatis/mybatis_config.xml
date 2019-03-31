@@ -11,7 +11,7 @@
 	</typeAliases>
 	<!--该路径是拦截器文件的路径 dao.Interceptor是拦截器文件的包名称 -->
 	<plugins>
-        <plugin interceptor="com.wjh.mysql.multi_mybatis_plus_xml.datasource.MybatisInterceptor">
+        <plugin interceptor="com.wjh.mysql.multi_mybatis_plus_xml.config.SqlPrintInterceptor">
         </plugin>
     </plugins>
 </configuration>

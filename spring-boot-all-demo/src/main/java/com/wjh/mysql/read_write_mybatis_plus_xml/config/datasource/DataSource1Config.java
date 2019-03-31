@@ -14,7 +14,7 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 
 @Configuration
 public class DataSource1Config {
-	
+	 
 	@Value("${spring.datasource.type}")
 	private Class<? extends DataSource> dataSourceType;
 
@@ -23,7 +23,6 @@ public class DataSource1Config {
     @Primary
     public DataSource testDataSource() {
         DruidDataSource build = DruidDataSourceBuilder.create().build();
-        
         return build;
     }
     

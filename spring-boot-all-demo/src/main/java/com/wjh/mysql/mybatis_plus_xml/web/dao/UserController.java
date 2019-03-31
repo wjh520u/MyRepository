@@ -1,4 +1,4 @@
-package com.wjh.mysql.read_write_mybatis_plus_xml.web;
+package com.wjh.mysql.mybatis_plus_xml.web.dao;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wjh.mysql.read_write_mybatis_plus_xml.model.User;
-import com.wjh.mysql.read_write_mybatis_plus_xml.service.dao.UserService;
+import com.wjh.mysql.mybatis_plus_xml.model.User;
+import com.wjh.mysql.mybatis_plus_xml.service.dao.UserService;
 
 @RestController
 public class UserController {
@@ -30,13 +30,14 @@ public class UserController {
     
     @RequestMapping("/add")
     public User save(User user) {
-        userService.insertUser(user);
+        userService.addUser(user);
         return user;
     }
     
     @RequestMapping(value="update")
     public User update(User user) {
         userService.updateUser(user);
+        com.baomidou.mybatisplus.annotation.FieldStrategy lFieldStrategy;
         return user;
     }
     
