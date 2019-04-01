@@ -148,11 +148,10 @@
 		<!-- mybatis-plus end -->
 		
 		<!-- JDBC template -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-			
-		</dependency>
+		</dependency> -->
 		
 		<!-- java工具类 -->
 		<dependency>
@@ -161,12 +160,11 @@
 		    <version>4.5.3</version>
 		</dependency>
 		
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
+		<!-- 整合redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
     </dependencies>
   <build>
     <plugins>
