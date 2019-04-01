@@ -44,6 +44,11 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.46</version>
+		</dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
@@ -108,12 +113,12 @@
 		</dependency>
 		
 		<!-- mybatis mysql. -->
-        <!-- <dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
         </dependency>
-        mybatis  与mybatis-plus冲突 
+        <!-- mybatis  与mybatis-plus冲突 
 		<dependency>
 		    <groupId>org.mybatis.spring.boot</groupId>
 		    <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -141,6 +146,21 @@
 		    <version>3.1.0</version>
 		</dependency> -->
 		<!-- mybatis-plus end -->
+		
+		<!-- JDBC template -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+			
+		</dependency>
+		
+		<!-- java工具类 -->
+		<dependency>
+		    <groupId>cn.hutool</groupId>
+		    <artifactId>hutool-all</artifactId>
+		    <version>4.5.3</version>
+		</dependency>
+		
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
