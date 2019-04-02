@@ -1,63 +1,80 @@
-package com.wjh.cache.redis.redis1.config;
+package com.wjh.cache.ehcache.config;
+
+import java.lang.reflect.Method;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import com.wjh.cache.redis.redis1.utils.RedisUtil;
 
 import redis.clients.jedis.JedisPoolConfig;
 
-//@Configuration
-//@PropertySource("classpath:resources/cache/redis/redis1/config/redis.yml")
-public class StandaloneRedisConfig {
 
-    @Value("${redis.maxIdle}")
-    private Integer maxIdle;
+@Configuration
+@EnableCaching
+public class RedisConfig extends CachingConfigurerSupport{
+    //自定义key生成方式
+    @Bean
+    public KeyGenerator keyGenerator() {
+        return new KeyGenerator() {
+            @Override
+            public Object generate(Object target, Method method, Object... params) {
+                StringBuilder sb = new StringBuilder();
+                String[] value = new String[1];
+                Cacheable cacheable = method.getAnnotation(Cacheable.class);
+                if (cacheable != null) {
+                    value = cacheable.value();
+                }
+                CachePut cachePut = method.getAnnotation(CachePut.class);
+                if (cachePut != null) {
+                    value = cachePut.value();
+                }
+                CacheEvict cacheEvict = method.getAnnotation(CacheEvict.class);
+                if (cacheEvict != null) {
+                    value = cacheEvict.value();
+                }
+                sb.append(value[0]);
+                sb.append(":");
+                sb.append(params[0].toString());
+                return sb.toString();
+            }
+        };
+    }
 
-    @Value("${redis.maxTotal}")
-    private Integer maxTotal;
-
-    @Value("${redis.maxWaitMillis}")
-    private Integer maxWaitMillis;
-
-    @Value("${redis.minEvictableIdleTimeMillis}")
-    private Integer minEvictableIdleTimeMillis;
-
-    @Value("${redis.numTestsPerEvictionRun}")
-    private Integer numTestsPerEvictionRun;
-
-    @Value("${redis.timeBetweenEvictionRunsMillis}")
-    private long timeBetweenEvictionRunsMillis;
-
-    @Value("${redis.testOnBorrow}")
-    private boolean testOnBorrow;
-
-    @Value("${redis.testWhileIdle}")
-    private boolean testWhileIdle;
-
-    @Value("${redis.hostName}")
-    private String hostName;
+    //缓存管理器
+    @Bean
+    public CacheManager cacheManager( RedisTemplate redisTemplate,RedisConnectionFactory jedisConnectionFactory) {
+    	
+    	RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig();
+    	defaultCacheConfig.serializeKeysWith(
+    			RedisSerializationContext.fromSerializer(new StringRedisSerializer()).getKeySerializationPair());
+    	defaultCacheConfig.serializeValuesWith(
+    			RedisSerializationContext.fromSerializer(new StringRedisSerializer()).getKeySerializationPair());
+        RedisCacheManager cacheManager = 
+        		new RedisCacheManager( 
+        				RedisCacheWriter.nonLockingRedisCacheWriter(jedisConnectionFactory),
+        				defaultCacheConfig);
+        return cacheManager;
+    }
     
-    @Value("${redis.password}")
-    private Integer password;
     
-    @Value("${redis.port}")
-    private Integer port;
-
-    @Value("${spring.redis.cluster.nodes}")
-    private String clusterNodes; 
-
-    @Value("${spring.redis.cluster.max-redirects}")
-    private Integer mmaxRedirectsac;
-    
-
     /**
      * JedisPoolConfig 连接池
      * @return
@@ -94,7 +111,7 @@ public class StandaloneRedisConfig {
     * @throws
      */
     @Bean
-    public JedisConnectionFactory JedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
+    public RedisConnectionFactory JedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
     	 //IP地址  
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
     	redisStandaloneConfiguration.setHostName(hostName);
@@ -113,15 +130,15 @@ public class StandaloneRedisConfig {
         //客户端超时时间单位是毫秒    
         return  new JedisConnectionFactory(redisStandaloneConfiguration,jedisClientConfiguration);
     }
-
+    
     /**
      * 实例化 RedisTemplate 对象
      *
      * @return
      */
     @Bean
-    public RedisTemplate<String, Object> functionDomainRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, String> functionDomainRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
         return redisTemplate;
     }
@@ -131,28 +148,47 @@ public class StandaloneRedisConfig {
      * @param redisTemplate
      * @param factory
      */
-    private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
+    private void initDomainRedisTemplate(RedisTemplate<String, String> redisTemplate, RedisConnectionFactory factory) {
         //如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！  
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
         // 开启事务
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.setConnectionFactory(factory);
     }
-    /**
-     * 注入封装RedisTemplate
-    * @Title: redisUtil 
-    * @return RedisUtil
-    * @autor lpl
-    * @date 2017年12月21日
-    * @throws
-     */
-    @Bean(name = "redisUtil")
-    public RedisUtil redisUtil(RedisTemplate<String, Object> redisTemplate) {
-        RedisUtil redisUtil = new RedisUtil();
-        redisUtil.setRedisTemplate(redisTemplate);
-        return redisUtil;
-    }
+    
+    @Value("${redis.maxIdle}")
+    private Integer maxIdle;
+
+    @Value("${redis.maxTotal}")
+    private Integer maxTotal;
+
+    @Value("${redis.maxWaitMillis}")
+    private Integer maxWaitMillis;
+
+    @Value("${redis.minEvictableIdleTimeMillis}")
+    private Integer minEvictableIdleTimeMillis;
+
+    @Value("${redis.numTestsPerEvictionRun}")
+    private Integer numTestsPerEvictionRun;
+
+    @Value("${redis.timeBetweenEvictionRunsMillis}")
+    private long timeBetweenEvictionRunsMillis;
+
+    @Value("${redis.testOnBorrow}")
+    private boolean testOnBorrow;
+
+    @Value("${redis.testWhileIdle}")
+    private boolean testWhileIdle;
+
+    @Value("${redis.hostName}")
+    private String hostName;
+    
+    @Value("${redis.password}")
+    private Integer password;
+    
+    @Value("${redis.port}")
+    private Integer port;
 }
