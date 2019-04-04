@@ -38,6 +38,7 @@ public class DataSource1Config {
         MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setGlobalConfig(configuration);
+        //Interceptor[] interceptor = new Interceptor[]{new SqlPrintInterceptor()};
         bean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:resources/mysql/multi_mybatis_plus_xml/mybatis/mybatis_config.xml"));
         //bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:resources/mysql/multi_mybatis_plus_xml/mybatis/mapper/one/*.xml"));
         return bean.getObject();

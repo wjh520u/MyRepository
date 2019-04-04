@@ -2,6 +2,8 @@ package com.wjh.cache.redis.redis1.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
@@ -10,12 +12,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import com.wjh.cache.redis.redis1.serializer.KryoRedisSerializer;
 import com.wjh.cache.redis.redis1.utils.RedisUtil;
 
 import redis.clients.jedis.JedisPoolConfig;
 
-//@Configuration
-//@PropertySource("classpath:resources/cache/redis/redis1/config/redis.yml")
+@Configuration
+@PropertySource("classpath:resources/cache/redis/redis1/config/redis.yml")
 public class StandaloneRedisConfig {
 
     @Value("${redis.maxIdle}")
@@ -136,7 +139,7 @@ public class StandaloneRedisConfig {
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setValueSerializer(new KryoRedisSerializer());
         // 开启事务
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.setConnectionFactory(factory);

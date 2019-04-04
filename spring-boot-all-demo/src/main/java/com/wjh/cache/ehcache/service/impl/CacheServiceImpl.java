@@ -6,10 +6,11 @@ import org.springframework.stereotype.Service;
 import com.wjh.cache.ehcache.service.CacheService;
 
 @Service
+//@CacheConfig(cacheManager = "RedisCacheManager")
 public class CacheServiceImpl implements CacheService {
 
 	@Override
-	@Cacheable(value = "test",key="#key")
+	@Cacheable(key="#key",cacheNames="data",cacheManager = "EhCacheCacheManager")
 	public String getData(String key) {
 		// TODO Auto-generated method stub
 		System.err.println(key);

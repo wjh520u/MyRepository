@@ -16,11 +16,11 @@ public class TestController {
 	@RequestMapping("test")
 	public R test(String value) {
 		if (value != null) {
-			String string = redisService.put("test");
-			return R.ok(string);
+			Object string = redisService.put("test");
+			return R.ok(string.toString());
 		}else {
-			String string = redisService.get("test");
-			return R.ok(string);
+			Object string = redisService.get("test");
+			return R.ok(string.toString());
 		}
 		
 	}

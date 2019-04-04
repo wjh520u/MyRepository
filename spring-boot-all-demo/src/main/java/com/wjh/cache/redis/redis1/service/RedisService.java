@@ -2,8 +2,8 @@ package com.wjh.cache.redis.redis1.service;
 
 public interface RedisService {
 
-	String get(String string);
+	Object get(String string);
 
-	String put(String string);
+	Object put(String string);
 
 }

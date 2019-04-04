@@ -16,6 +16,7 @@ public class TestController {
 	@RequestMapping("test")
 	public R test(String value) {
 
+		System.out.println(11);
 		String fString = cacheService.getData(value);
 		
 		return R.ok_data(fString);

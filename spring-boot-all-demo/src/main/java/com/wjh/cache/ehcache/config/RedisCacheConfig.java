@@ -1,6 +1,9 @@
 package com.wjh.cache.ehcache.config;
 
 import java.lang.reflect.Method;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -22,6 +25,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import redis.clients.jedis.JedisPoolConfig;
@@ -29,7 +33,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 @EnableCaching
-public class RedisConfig extends CachingConfigurerSupport{
+public class RedisCacheConfig extends CachingConfigurerSupport{
     //自定义key生成方式
     @Bean
     public KeyGenerator keyGenerator() {
@@ -59,18 +63,29 @@ public class RedisConfig extends CachingConfigurerSupport{
     }
 
     //缓存管理器
-    @Bean
-    public CacheManager cacheManager( RedisTemplate redisTemplate,RedisConnectionFactory jedisConnectionFactory) {
+    @Bean("RedisCacheManager")
+    public CacheManager cacheManager(RedisConnectionFactory jedisConnectionFactory) {
     	
     	RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig();
-    	defaultCacheConfig.serializeKeysWith(
-    			RedisSerializationContext.fromSerializer(new StringRedisSerializer()).getKeySerializationPair());
-    	defaultCacheConfig.serializeValuesWith(
-    			RedisSerializationContext.fromSerializer(new StringRedisSerializer()).getKeySerializationPair());
+    	
+    	SerializationPair<String> keySerializationPair = RedisSerializationContext.fromSerializer(new StringRedisSerializer()).getKeySerializationPair();
+    	SerializationPair<String> valueSerializationPair = RedisSerializationContext.fromSerializer(new StringRedisSerializer()).getValueSerializationPair();
+    	//默认配置
+    	defaultCacheConfig.serializeKeysWith(keySerializationPair);
+    	defaultCacheConfig.serializeValuesWith(valueSerializationPair);
+    	defaultCacheConfig.entryTtl(Duration.ofSeconds(1));
+    	
+    	//自定义缓存名称配置
+    	Map<String ,RedisCacheConfiguration> cacheNameRedisConfig = new HashMap<String, RedisCacheConfiguration>();
+    	RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+    			.serializeKeysWith(keySerializationPair)
+    			.entryTtl(Duration.ofSeconds(2));
+    	cacheNameRedisConfig.put("testCacheName4", cacheConfig);
+    	
         RedisCacheManager cacheManager = 
-        		new RedisCacheManager( 
+        		new RedisCacheManager(
         				RedisCacheWriter.nonLockingRedisCacheWriter(jedisConnectionFactory),
-        				defaultCacheConfig);
+        				defaultCacheConfig,cacheNameRedisConfig);
         return cacheManager;
     }
     
