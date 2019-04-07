@@ -1,0 +1,27 @@
+server:
+  port: 8085
+  
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/rabbitmq/
+      suffix: .jsp
+  static-path-pattern: /**
+  resources: 
+    static-locations: classpath:/resources/ext/queue/rabbitmq/static/
+#重试次数，默认为3次
+  rabbitmq:
+      listener:
+        retry:
+          #开启重试
+          enable: false
+          max-attempts: 5
+      # 开启模式ACK
+      #direct: 
+        #acknowledge-mode: manual
+      #simple: 
+        #acknowledge-mode: manual
+  # 开启发送确认
+  #publisher-confirms: true
+  # 开启发送失败退回
+  #publisher-returns: true

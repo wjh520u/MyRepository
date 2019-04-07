@@ -6,4 +6,7 @@ spring:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
+    static-path-pattern: /**
+  resources: 
+    static-locations = classpath:/resources/ext/queue/rabbitmq/static/
     
