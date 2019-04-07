@@ -1,4 +1,4 @@
-package com.wjh.start.task;
+package com.wjh.start.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @date 2018年1月5日
  */
 @EnableAsync
-@SpringBootApplication(scanBasePackages = "com.wjh.start.task")
+@SpringBootApplication(scanBasePackages = "com.wjh.start.controller")
 public class Application {
 
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
@@ -33,7 +33,7 @@ public class Application {
 	public static void main(String[] args) {
 		// 启动嵌入式的 Tomcat 并初始化 Spring 环境及其各 Spring 组件
 		new SpringApplicationBuilder(Application.class)
-		.properties("spring.config.location=classpath:/resources/start/task/application.properties").run(args);
+		.properties("spring.config.location=classpath:/resources/start/controller/yml.yml").run(args);
 		logger.info("程序启动成功!");
 	}
 

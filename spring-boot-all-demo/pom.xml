@@ -22,13 +22,15 @@
         <commons.net.version>3.3</commons.net.version>
         <fastjson.version>1.2.45</fastjson.version>
         <joda.time.version>2.9.9</joda.time.version>
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
     </properties>
   
   <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.3.RELEASE</version>
-  </parent>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
     <dependencies>
     	<dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,12 +50,12 @@
 		    <artifactId>fastjson</artifactId>
 		    <version>1.2.46</version>
 		</dependency>
-        <dependency>
+       <!--  <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency> -->
         <!-- SSL证书 -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -129,13 +131,13 @@
 		    <artifactId>pagehelper</artifactId>
 			<version>4.2.1</version>
 		</dependency> -->
-		<dependency>
+		<!-- <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>${druid.version}</version>
-        </dependency>
+        </dependency> -->
         <!-- mybatis-plus begin -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>com.baomidou</groupId>
 		    <artifactId>mybatis-plus-boot-starter</artifactId>
 		    <version>3.1.0</version>
@@ -144,7 +146,7 @@
 		    <groupId>com.baomidou</groupId>
 		    <artifactId>mybatis-plus</artifactId>
 		    <version>3.1.0</version>
-		</dependency>
+		</dependency> -->
 		<!-- mybatis-plus end -->
 		
 		<!-- JDBC template -->
@@ -185,7 +187,36 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
+		
+		
+
     </dependencies>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <!--使用aliyun镜像-->
+    <repositories>
+        <repository>
+            <id>alimaven</id>
+            <name>Maven Aliyun Mirror</name>
+            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
   <build>
     <plugins>
       <plugin>

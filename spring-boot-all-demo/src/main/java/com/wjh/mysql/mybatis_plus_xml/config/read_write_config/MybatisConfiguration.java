@@ -2,7 +2,6 @@ package com.wjh.mysql.mybatis_plus_xml.config.read_write_config;
 
 import javax.sql.DataSource;
 
-import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
