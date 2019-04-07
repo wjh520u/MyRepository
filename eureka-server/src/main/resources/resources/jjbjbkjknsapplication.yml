@@ -1,0 +1,36 @@
+
+server:
+  port: 8761  # 当前eureka server 服务的端口号为8080
+eureka:
+  dashboard:
+    path: xyz
+  instance:
+    hostname: localhost # 当前eureka 的hostname 为 localhost
+  client:
+    register-with-eureka: false # 当前服务不需要到eureka server上注册为客户端
+    fetch-registry: false #不进行服务检索
+    serviceUrl: # eureka服务地址
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: false # 设为false，关闭自我保护
+    eviction-interval-timer-in-ms: 400000 # 清理间隔（单位毫秒，默认是60*1000）
+    
+#使用Feign调用接口分两层，ribbon的调用和hystrix的调用，所以ribbon的超时时间和Hystrix的超时时间的结合就是Feign的超时时间
+#hystrix的超时时间
+hystrix:
+  command:
+     default:
+       execution:
+         timeout:
+            enabled: true
+         isolation:
+            thread:
+            timeoutInMilliseconds: 9000
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 3000
+  ConnectTimeout: 3000
+  
+spring: 
+  config:
+    additional-location: 

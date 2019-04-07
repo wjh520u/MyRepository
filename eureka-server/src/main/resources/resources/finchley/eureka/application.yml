@@ -1,0 +1,16 @@
+
+server:
+  port: 8761  # 当前eureka server 服务的端口号为8080
+eureka:
+  #dashboard: 
+    #path: xyz
+  instance:
+    hostname: localhost # 当前eureka 的hostname 为 localhost
+  client:
+    register-with-eureka: false # 当前服务不需要到eureka server上注册为客户端
+    fetch-registry: false #不进行服务检索
+    serviceUrl: # eureka服务地址
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: false # 设为false，关闭自我保护
+    eviction-interval-timer-in-ms: 400000 # 清理间隔（单位毫秒，默认是60*1000）

@@ -1,0 +1,25 @@
+server:
+  port: 8888
+
+spring: 
+  application: 
+    name: config-server
+  #profiles:
+  #  active: native  # 配置使用本地储存
+  cloud: 
+    config: 
+      label: master
+      server: 
+        native:
+          search-locations: classpath:/
+        git: 
+          uri: https://github.com/wjh520u/MyRepository/
+          #/**
+          searchPaths: spring-boot-all-demo
+          username: 503950670@qq.com
+          password: 13286754023a
+          
+eureka: 
+  client: 
+    serviceUrl: 
+      defaultZone: http://localhost:8761/eureka/

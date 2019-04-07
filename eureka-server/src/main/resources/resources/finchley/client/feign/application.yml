@@ -1,0 +1,52 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8765
+spring:
+  application:
+    name: service-feign
+  
+  cloud: 
+    config: 
+      label: master
+      profile: dev
+      #uri: http://localhost:8888/
+      #用eureka 服务配置中心
+      discovery: 
+        enabled: true
+        serviceId: config-server
+    
+feign: 
+  hystrix:
+    enabled: true#熔断器支持
+  client:
+    config:
+      remote-service:           #服务名，填写default为所有服务
+        connectTimeout: 9000
+        readTimeout: 12000
+  # 配置请求GZIP压缩
+  #compression.request.enabled=true
+  # 配置响应GZIP压缩
+  #compression.response.enabled=true
+  # 配置压缩支持的MIME TYPE
+  #compression.request.mime-types=text/xml,application/xml,application/json
+  # 配置压缩数据大小的下限
+  #compression.request.min-request-size=2048
+
+#使用Feign调用接口分两层，ribbon的调用和hystrix的调用，所以ribbon的超时时间和Hystrix的超时时间的结合就是Feign的超时时间
+#hystrix的超时时间
+hystrix:
+  command:
+     default:
+       execution:
+         timeout:
+            enabled: true
+         isolation:
+            thread:
+              timeoutInMilliseconds: 9000
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 3000
+  ConnectTimeout: 3000
